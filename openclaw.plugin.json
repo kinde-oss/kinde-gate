@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openclaw.dev/schemas/plugin/v1.json",
+  "id": "kinde-gate",
+  "name": "Kinde Gate",
+  "version": "0.1.0",
+  "description": "Gate OpenClaw tool calls against live Kinde roles, permissions, and feature flags. Guard mode enforces silently on every tool call. Tools mode exposes kinde_check_permission, kinde_get_flag, kinde_get_user, and kinde_get_org as callable agent tools.",
+  "configSchema": {
+    "additionalProperties": false,
+    "type": "object",
+    "required": [
+      "KINDE_DOMAIN",
+      "KINDE_CLIENT_ID",
+      "KINDE_CLIENT_SECRET"
+    ],
+    "properties": {
+      "KINDE_DOMAIN": {
+        "minLength": 1,
+        "description": "Your Kinde domain (e.g. yourbusiness.kinde.com)",
+        "type": "string"
+      },
+      "KINDE_CLIENT_ID": {
+        "minLength": 1,
+        "description": "M2M app client ID",
+        "type": "string"
+      },
+      "KINDE_CLIENT_SECRET": {
+        "minLength": 1,
+        "description": "M2M app client secret",
+        "type": "string"
+      },
+      "GUARD_MODE": {
+        "default": true,
+        "description": "Hook into before_tool_call lifecycle and enforce Kinde permissions on every tool call.",
+        "type": "boolean"
+      },
+      "TOOLS_MODE": {
+        "default": true,
+        "description": "Register kinde_check_permission, kinde_get_flag, kinde_get_user, and kinde_get_org as callable agent tools.",
+        "type": "boolean"
+      },
+      "KINDE_REQUIRED_PERMISSION": {
+        "minLength": 1,
+        "description": "Permission key that all users must hold to invoke any tool (guard mode). Omit to allow all authenticated users.",
+        "type": "string"
+      }
+    }
+  },
+  "uiHints": {
+    "KINDE_CLIENT_SECRET": {
+      "sensitive": true
+    }
+  },
+  "activation": {
+    "onStartup": true
+  },
+  "contracts": {
+    "tools": [
+      "kinde_check_permission",
+      "kinde_get_flag",
+      "kinde_get_user",
+      "kinde_get_org"
+    ]
+  }
+}

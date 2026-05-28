@@ -1,0 +1,41 @@
+{
+  "name": "kinde-gate",
+  "version": "0.1.0",
+  "description": "Gate OpenClaw tool calls against live Kinde roles, permissions, and feature flags.",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "plugin:build": "openclaw plugins build",
+    "plugin:validate": "openclaw plugins validate",
+    "test": "node --test --experimental-test-snapshots src/__tests__/**/*.test.ts",
+    "test:run": "node --import tsx/esm --test src/__tests__/**/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "openclaw": {
+    "compat": {
+      "pluginApi": "1"
+    },
+    "build": {
+      "openclawVersion": ">=2026.5.22"
+    },
+    "extensions": [
+      "./dist/index.js"
+    ]
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.0",
+    "openclaw": "^2026.5.22"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
